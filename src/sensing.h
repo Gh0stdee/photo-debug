@@ -1,7 +1,7 @@
 #include <define.h>
+#include <Adafruit_Sensor.h>
 struct SensorsClass
 {
-
     void init();
 
     struct Light

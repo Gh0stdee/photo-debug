@@ -1,5 +1,4 @@
 #include <sensing.h>
-#include <Arduino.h>
 
 void SensorsClass::init()
 {
