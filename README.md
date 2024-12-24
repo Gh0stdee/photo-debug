@@ -1,5 +1,7 @@
 # Repo for Debugging Wake and Sleep Functionality
 
-## Current issue
+## Current status
 
-Have undefined reference to Sensors: To be confirmed if it contributes to bug.
+Able to enter and exit sleep with correct values.
+
+WIFI Power Up and Down Functionalites to be added.

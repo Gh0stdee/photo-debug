@@ -6,7 +6,7 @@ extern SensorsClass Sensors;
 
 struct BoardStatus
 {
-    uint8_t sleeping = false;
+    uint8_t sleeping = false; //initially awake
 };
 static BoardStatus status;
 
@@ -16,6 +16,7 @@ float sleepLightThreshold = LIGHT_DEFAULT_SLEEP_THRESHOLD;
 void powerUp()
 {
     Serial.println("waking...");
+    Serial.println();
     // XTrayWiFi.powerUp();
     status.sleeping = false;
 }
@@ -23,6 +24,7 @@ void powerUp()
 void powerDown()
 {
     Serial.println("sleeping...");
+    Serial.println();
     // XTrayWiFi.powerDown();
     status.sleeping = true;
 }
@@ -30,6 +32,8 @@ void powerDown()
 void updateSleeping()
 {
     float light = Sensors.light.get();
+    Serial.printf("Board status: %d\n", status.sleeping);
+    delay(2000);
 
     if (!status.sleeping && light <= sleepLightThreshold) {
         powerDown();
@@ -58,7 +62,7 @@ void loop() {
   static auto lasttime = 0;
   auto currenttime = millis();
   //Check sleep condition
-  if(currenttime - lasttime > 499)
+  if(currenttime - lasttime > 2000)
   {
     Serial.println("Check 2 success");
     updateSleeping();
