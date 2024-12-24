@@ -1,5 +1,8 @@
 #include <Arduino.h>
-#include <sensing.h>
+#include "sensing.h"
+#include "main.h"
+
+extern SensorsClass Sensors;
 
 struct BoardStatus
 {

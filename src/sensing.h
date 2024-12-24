@@ -1,5 +1,9 @@
-#include <define.h>
+#include "define.h"
 #include <Adafruit_Sensor.h>
+
+#ifndef SENSING_H
+#define SENSING_H
+
 struct SensorsClass
 {
     void init();
@@ -13,4 +17,4 @@ struct SensorsClass
     } light;
 };
 
-extern SensorsClass Sensors;
+#endif

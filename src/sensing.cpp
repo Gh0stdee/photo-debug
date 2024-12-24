@@ -1,4 +1,6 @@
-#include <sensing.h>
+#include "sensing.h"
+
+SensorsClass Sensors;
 
 void SensorsClass::init()
 {
