@@ -7,4 +7,8 @@
 #define LIGHT_DEBUG_INTERVAL          499 // How often light value is printed.
 #define LIGHT_SENSOR_PIN              34
 
+// MCU clock speed (in MHz). Options: 80, 160, 240.
+#define SLEEP_MCU_CLOCK_SPEED 80
+#define AWAKE_MCU_CLOCK_SPEED 240
+
 #endif

@@ -2,6 +2,8 @@
 #include "sensing.h"
 #include "main.h"
 
+static auto lasttime = 0; 
+
 extern SensorsClass Sensors;
 
 struct BoardStatus
@@ -18,6 +20,8 @@ void powerUp()
     Serial.println("waking...");
     Serial.println();
     // XTrayWiFi.powerUp();
+    delay(10);
+    setCpuFrequencyMhz(AWAKE_MCU_CLOCK_SPEED);
     status.sleeping = false;
 }
 
@@ -25,6 +29,8 @@ void powerDown()
 {
     Serial.println("sleeping...");
     Serial.println();
+    delay(10);
+    setCpuFrequencyMhz(SLEEP_MCU_CLOCK_SPEED);
     // XTrayWiFi.powerDown();
     status.sleeping = true;
 }
@@ -33,7 +39,7 @@ void updateSleeping()
 {
     float light = Sensors.light.get();
     Serial.printf("Board status: %d\n", status.sleeping);
-    delay(2000);
+    //delay(2000);
 
     if (!status.sleeping && light <= sleepLightThreshold) {
         powerDown();
@@ -45,9 +51,9 @@ void updateSleeping()
     {
 
     }
-    static uint32_t lt;
-    if (millis() - lt > LIGHT_DEBUG_INTERVAL) {
-        lt = millis();
+    //static uint32_t lt;
+    if (millis() - lasttime > LIGHT_DEBUG_INTERVAL) {
+        lasttime = millis();
         Serial.printf("light:%.3f\n", light);
     }
 }
@@ -59,10 +65,9 @@ void setup() {
 }
 
 void loop() {
-  static auto lasttime = 0;
   auto currenttime = millis();
   //Check sleep condition
-  if(currenttime - lasttime > 2000)
+  if(currenttime - lasttime > 499)
   {
     Serial.println("Check 2 success");
     updateSleeping();
