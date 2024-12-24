@@ -1,10 +1,13 @@
 #include <Arduino.h>
 #include "sensing.h"
+#include "wifi_low_level.h"
 #include "main.h"
+#include <WiFi.h>
 
 static auto lasttime = 0; 
 
 extern SensorsClass Sensors;
+extern WiFiStuff XTrayWiFi;
 
 struct BoardStatus
 {
@@ -19,9 +22,10 @@ void powerUp()
 {
     Serial.println("waking...");
     Serial.println();
-    // XTrayWiFi.powerUp();
+    XTrayWiFi.powerUp();
     delay(10);
     setCpuFrequencyMhz(AWAKE_MCU_CLOCK_SPEED);
+    Serial.printf("Current CpuFrequency: %d\n",getCpuFrequencyMhz());
     status.sleeping = false;
 }
 
@@ -31,7 +35,8 @@ void powerDown()
     Serial.println();
     delay(10);
     setCpuFrequencyMhz(SLEEP_MCU_CLOCK_SPEED);
-    // XTrayWiFi.powerDown();
+    Serial.printf("Current CpuFrequency: %d\n",getCpuFrequencyMhz());   
+    XTrayWiFi.powerDown();
     status.sleeping = true;
 }
 
@@ -39,7 +44,6 @@ void updateSleeping()
 {
     float light = Sensors.light.get();
     Serial.printf("Board status: %d\n", status.sleeping);
-    //delay(2000);
 
     if (!status.sleeping && light <= sleepLightThreshold) {
         powerDown();
@@ -58,19 +62,19 @@ void updateSleeping()
     }
 }
 
-void setup() {
-  Serial.begin(115200);
-  Sensors.init();
-  Serial.println("Check 1 success");
+void setup() 
+{
+    Serial.begin(115200);
+    Sensors.init();
+    XTrayWiFi.init();
 }
 
 void loop() {
-  auto currenttime = millis();
-  //Check sleep condition
-  if(currenttime - lasttime > 499)
-  {
-    Serial.println("Check 2 success");
+    auto currenttime = millis();
+    //Check sleep condition
+    if(currenttime - lasttime > 499)
+    {
     updateSleeping();
-  }
+    }
 }
 

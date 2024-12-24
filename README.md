@@ -10,4 +10,4 @@ Moved lasttime out of loop()
 
 Used the checking speed
 
-WIFI Power Up and Down Functionalites to be added.
+Added WIFI Power Up and Down Functionalites

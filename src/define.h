@@ -11,4 +11,9 @@
 #define SLEEP_MCU_CLOCK_SPEED 80
 #define AWAKE_MCU_CLOCK_SPEED 240
 
+
+// WiFi Stuff
+#define wifi_ssid "ilfandkym"
+#define wifi_pwd  "94263770"
+
 #endif
