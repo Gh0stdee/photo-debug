@@ -2,9 +2,7 @@
 #include "sensing.h"
 #include "wifi_low_level.h"
 #include "main.h"
-#include <WiFi.h>
-
-static auto lasttime = 0; 
+#include <WiFi.h> 
 
 extern SensorsClass Sensors;
 extern WiFiStuff XTrayWiFi;
@@ -55,9 +53,9 @@ void updateSleeping()
     {
 
     }
-    //static uint32_t lt;
-    if (millis() - lasttime > LIGHT_DEBUG_INTERVAL) {
-        lasttime = millis();
+    static uint32_t lt;
+    if (millis() - lt > LIGHT_DEBUG_INTERVAL) {
+        lt = millis();
         Serial.printf("light:%.3f\n", light);
     }
 }
@@ -70,10 +68,12 @@ void setup()
 }
 
 void loop() {
+    static auto lasttime = 0; 
     auto currenttime = millis();
     //Check sleep condition
     if(currenttime - lasttime > 499)
     {
+    lasttime = currenttime;
     updateSleeping();
     }
 }
